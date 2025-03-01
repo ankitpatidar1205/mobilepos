@@ -1,0 +1,144 @@
+body{
+  font-family: 'Poppins', sans-serif !important;
+} 
+
+
+.custom-navbar {
+background: #11101d;
+  /* Matches the green color in the image */
+  height: 70px;
+}
+
+.custom-navbar-brand img {
+  width: 50px;
+}
+
+.custom-navbar-nav .nav-link {
+  color: white !important;
+  font-size: 16px;
+  padding: 0 15px;
+}
+
+.custom-navbar-nav .dropdown-menu {
+  min-width: 200px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.custom-dropdown-item {
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+.custom-dropdown-item i {
+  margin-right: 8px;
+}
+
+.custom-dropdown-item:hover {
+  color: #06223a;
+  background-color: rgba(185, 185, 185, 0.6);
+}
+
+.dropdown-toggle::after {
+  display: inline-block;
+  margin-left: .255em;
+  vertical-align: .255em;
+  content: none;
+  border-top: .3em solid;
+  border-right: .3em solid transparent;
+  border-bottom: 0;
+  border-left: .3em solid transparent;
+}
+
+/* genral class  */
+
+.nav-item:hover {
+  background-color: #06223a;
+/* border: 2px solid #06223a !important;
+border-radius: 10px; */
+}
+
+.nav-item {
+  padding: 10px;
+}
+
+.nav-link {
+  padding: 0;
+}
+
+.navbar-nav .nav-link {
+  color: white !important;
+  font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #d1d1d1;
+}
+
+.dropdown-menu {
+
+  border: none;
+}
+
+.dropdown-menu .dropdown-item {
+  color: black;
+  padding: 10px 20px;
+}
+
+.dropdown-menu .dropdown-item i {
+  color: #06223a;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: rgba(185, 185, 185, 0.6);
+  color: black;
+}
+
+.dropdown-menu .dropdown-divider {
+  border-top: 1px solid #495057;
+}
+
+/* Navbar Toggler Customization */
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Align Dropdown to the Navbar */
+.navbar-nav .dropdown-menu {
+  left: 0;
+  right: auto;
+}
+
+/* Dropdown Icon Styling */
+.dropdown-item i {
+  margin-right: 8px;
+  color: #f1f1f1;
+}
+
+/* Customize Nav and Drop-down Links */
+.navbar-nav .nav-link {
+  color: white !important;
+}
+
+.navbar-nav .dropdown-toggle::after {
+  margin-left: 5px;
+}
+
+/* Adjust Right-aligned Menus */
+.navbar-nav.ms-auto .dropdown-menu {
+  margin-left: -70px;
+}
+
+/* Icon Size Adjustments */
+.fa-plus,
+.fa-bell,
+.fa-gear {
+  font-size: 1.1rem;
+}

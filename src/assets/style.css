@@ -1,0 +1,39 @@
+/* Custom DataGrid Styles */
+
+  /* Column Headers */
+  .custom-data-grid .MuiDataGrid-columnHeaders {
+    
+  
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  /* Alternate Row Colors */
+  .custom-data-grid .MuiDataGrid-row:nth-child(even) {
+    background-color: #f5f5f5;
+  }
+  
+  .custom-data-grid .MuiDataGrid-row:hover {
+    background-color: #e3f2fd;
+  }
+  
+  /* Footer Styling */
+  .custom-data-grid .MuiDataGrid-footerContainer {
+    background-color: #f5f5f5;
+  }
+  
+  /* Custom Scrollbar */
+  .custom-data-grid .MuiDataGrid-virtualScroller {
+    scrollbar-width: thin;
+    scrollbar-color: #1976d2 #f5f5f5 !important;
+  }
+  
+  .custom-data-grid .MuiDataGrid-virtualScroller::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .custom-data-grid .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb {
+    background-color: #1976d2;
+    border-radius: 10px;
+  }
+  

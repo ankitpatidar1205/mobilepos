@@ -1,0 +1,206 @@
+body {
+    font-family: 'Poppins', sans-serif !important;
+}
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+ }
+.text-primary {
+    color: #06223a;
+}
+
+.custombtn:hover {
+    background-color: #06223a;
+    color: white !important;
+}
+
+
+
+.set_btn {
+    background-color: #06223a;
+    color: white !important;
+    border: none !important;
+}
+
+.set_btn:hover {
+    background-color: #06223a;
+    color: white !important;
+    border: none !important;
+}
+
+.navbar-toggler {
+    background-color: white !important;
+}
+
+
+/* ================================ */
+/* 🎨 Sidebar Styling */
+/* ================================ */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  background: #11101d;
+  color: white;
+  transition: all 0.5s ease-in-out;
+  overflow-y: hidden;
+  z-index: 999;
+  width: 78px;
+}
+
+.sidebar.open {
+  width: 230px;
+}
+
+/* Sidebar Logo */
+.sidebar-logo-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background: #1d1b31;
+  border-bottom: 1px solid #333;
+}
+
+.sidebar-logo-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #40aed6;
+  transition: opacity 0.3s ease-in-out;
+}
+
+#sidebar-btn {
+  font-size: 20px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+}
+
+/* Sidebar Navigation */
+.sidebar-nav-list {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-nav-list li {
+  transition: all 0.3s ease-in-out;
+  border-radius: 8px;
+  margin: 5px 10px;
+}
+
+.sidebar-nav-list li:hover {
+  background: #1d1b31;
+  color: #40aed6;
+}
+
+.sidebar-nav-list li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  padding: 10px 15px;
+  transition: all 0.3s ease-in-out;
+  border-radius: 8px;
+}
+
+.sidebar-nav-list li a:hover {
+  background: #1d1b31;
+  color: #40aed6;
+}
+
+/* ================================ */
+/* 🎯 Sidebar Dropdown (Submenu) */
+/* ================================ */
+.sidebar-dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  color: white;
+}
+
+.sidebar-dropdown:hover {
+  background: #1d1b31;
+  color: #40aed6;
+}
+
+.sidebar-dropdown.open {
+  background: #1d1b31;
+  color: #40aed6;
+}
+
+.dropdown-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s ease-in-out;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.dropdown-menu.show {
+  max-height: 500px;
+  opacity: 1;
+  padding-top: 5px;
+}
+
+.dropdown-item {
+  padding: 8px 15px;
+  border-radius: 5px;
+  color: white;
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease-in-out;
+}
+
+.dropdown-item:hover {
+  background: #1d1b31;
+  color: #40aed6;
+}
+
+/* ================================ */
+/* 🔄 Sidebar Expand/Collapse Effects */
+/* ================================ */
+.sidebar.open ~ .sidebar-home-section {
+  left: 230px;
+  width: calc(100% - 230px);
+}
+
+.sidebar-home-section {
+  position: relative;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px);
+  transition: all 0.7s ease-in-out;
+  padding: 5px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* ================================ */
+/* 📱 Mobile Responsiveness */
+/* ================================ */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 78px;
+  }
+
+  .sidebar.open {
+    width: 230px;
+  }
+
+  .sidebar.open ~ .sidebar-home-section {
+    left: 0;
+    width: 100%;
+  }
+
+  .sidebar-home-section {
+    left: 0;
+    width: 100%;
+  }
+}
