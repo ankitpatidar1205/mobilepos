@@ -1,113 +1,150 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Form, Input, Select, Space, message } from "antd";
-import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Table, Modal, Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMetaData, addBrand, updateBrand, deleteBrand } from "../redux/metaSlice";
+import Swal from "sweetalert2";
+import { fetchCategories } from "../../../redux/slices/categorySlice";
+import { createBrand, fetchBrands, deleteBrand } from "../../../redux/slices/brandSlice";
 
 const BrandPage = () => {
   const dispatch = useDispatch();
-  const { brands, categories, loading } = useSelector((state) => state.meta);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [editingBrand, setEditingBrand] = useState(null);
-  const [form] = Form.useForm();
+  const { brands, loading } = useSelector((state) => state.brands);
+  const { categories } = useSelector((state) => state.categories);
+
+  const [showModal, setShowModal] = useState(false);
+  const [brandName, setBrandName] = useState("");
+  const [categoryId, setCategoryId] = useState("");
 
   useEffect(() => {
-    dispatch(fetchMetaData());
+    dispatch(fetchBrands());
+    dispatch(fetchCategories()); 
   }, [dispatch]);
 
-  const handleAdd = () => {
-    setEditingBrand(null);
-    form.resetFields();
-    setIsModalVisible(true);
+  const handleModalClose = () => {
+    setShowModal(false);
+    setBrandName("");
+    setCategoryId("");
   };
 
-  const handleEdit = (record) => {
-    setEditingBrand(record);
-    form.setFieldsValue({
-      name: record.name,
-      categoryId: record.categoryId, // assumes brand data includes a categoryId field
-    });
-    setIsModalVisible(true);
+  const handleModalShow = () => setShowModal(true);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (!brandName || !categoryId) return;
+
+    const brandData = {
+      brand_name: brandName,
+      categoryId : categoryId,
+    };
+
+    dispatch(createBrand(brandData));
+    handleModalClose();
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteBrand(id))
-      .then(() => message.success("Brand deleted"))
-      .catch(() => message.error("Failed to delete brand"));
-  };
-
-  const handleOk = () => {
-    form.validateFields().then((values) => {
-      if (editingBrand) {
-        dispatch(updateBrand({ id: editingBrand.id, name: values.name, categoryId: values.categoryId }))
-          .then(() => message.success("Brand updated"))
-          .catch(() => message.error("Update failed"));
-      } else {
-        dispatch(addBrand(values))
-          .then(() => message.success("Brand added"))
-          .catch(() => message.error("Addition failed"));
+  const handleDeleteBrand = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteBrand(id));
+        Swal.fire("Deleted!", "Brand has been deleted.", "success");
       }
-      setIsModalVisible(false);
-      form.resetFields();
     });
   };
 
   return (
     <div>
-      <h2>Brand Management</h2>
-      <Button type="primary" onClick={handleAdd} icon={<PlusOutlined />}>
-        Add Brand
-      </Button>
-      <Table dataSource={brands} rowKey="id" loading={loading} style={{ marginTop: 20 }}>
-        <Table.Column title="Name" dataIndex="name" key="name" />
-        <Table.Column
-          title="Category"
-          dataIndex="categoryName"
-          key="category"
-          render={(_, record) => {
-            const category = categories.find((cat) => cat.id === record.categoryId);
-            return category ? category.name : "N/A";
-          }}
-        />
-        <Table.Column
-          title="Actions"
-          key="actions"
-          render={(_, record) => (
-            <Space>
-              <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
-              <Button icon={<DeleteOutlined />} danger onClick={() => handleDelete(record.id)} />
-            </Space>
-          )}
-        />
-      </Table>
-      <Modal
-        title={editingBrand ? "Edit Brand" : "Add Brand"}
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={() => setIsModalVisible(false)}
-      >
-        <Form form={form} layout="vertical">
-          <Form.Item
-            name="name"
-            label="Brand Name"
-            rules={[{ required: true, message: "Please input brand name" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="categoryId"
-            label="Category"
-            rules={[{ required: true, message: "Please select a category" }]}
-          >
-            <Select placeholder="Select a category">
-              {categories.map((cat) => (
-                <Select.Option key={cat.id} value={cat.id}>
-                  {cat.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Form>
+      <div className="mx-md-5 mt-5 mx-3">
+        <div className="shadow p-4">
+          <div className="row d-flex justify-content-between">
+            <div className="col-md-9">
+              <h3 className="mb-md-4 mb-2 fw-semibold">Manage Brands</h3>
+            </div>
+            <div className="col-md-3 text-md-end">
+              <button
+                type="button"
+                className="btn text-white rounded px-4 py-2 fw-semibold mt-4"
+                style={{ backgroundColor: "#06223a" }}
+                onClick={handleModalShow}
+              >
+                <i className="fa-solid fa-plus" /> Create Brand
+              </button>
+            </div>
+          </div>
+
+          <Table striped bordered hover className="mt-3">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Brand Name</th>
+                <th>Category</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="4" className="text-center">Loading...</td>
+                </tr>
+              ) : brands.length > 0 ? (
+                brands.map((brand, index) => (
+                  <tr key={brand._id}>
+                    <td>{index + 1}</td>
+                    <td>{brand.brand_name}</td>
+                    <td>{brand.category?.category_name}</td>
+                    <td>
+                      <Button variant="danger" size="sm" onClick={() => handleDeleteBrand(brand._id)}>
+                        <i className="fa-solid fa-trash" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" className="text-center">No brands found.</td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </div>
+      </div>
+
+      <Modal show={showModal} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create New Brand</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleFormSubmit}>
+            <Form.Group controlId="brandName">
+              <Form.Label>Brand Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Brand Name"
+                value={brandName}
+                onChange={(e) => setBrandName(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="categorySelect" className="mt-3">
+              <Form.Label>Select Category</Form.Label>
+              <Form.Select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
+                <option value="">Select Category</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.category_name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Button variant="primary" type="submit" className="mt-3">Submit</Button>
+          </Form>
+        </Modal.Body>
       </Modal>
     </div>
   );

@@ -5,14 +5,16 @@ import authReducer from '../slices/authSlice';
 import customerReducer from '../slices/customerSlice';
 import productReducer from '../slices/productSlice';
 import metaReducer from '../slices/metaSlice';
-
+import categoryReducer from '../slices/categorySlice'
+import brandReducer from '../slices/brandSlice'
 const store = configureStore({
   reducer: {
     auth: authReducer,
     customer: customerReducer,
     product: productReducer,
     meta: metaReducer, 
-    // Add other slices as needed
+    categories:categoryReducer,
+    brands:brandReducer,
   },
 });
 

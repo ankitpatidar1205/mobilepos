@@ -137,16 +137,7 @@ const Sidebar = () => {
             }}>
               {isSidebarOpen && <ListItemText primary="Brand" />}
             </ListItemButton>
-            <ListItemButton component={Link} to="/modal" sx={{
-              borderRadius: "8px",
-              transition: "all 0.3s ease-in-out",
-              "&:hover": {
-                backgroundColor: "#1d1b31",
-                color: "#40aed6",
-              },
-            }}>
-              {isSidebarOpen && <ListItemText primary="Modal" />}
-            </ListItemButton>
+          
             <ListItemButton component={Link} to="/RepairPart" sx={{
               borderRadius: "8px",
               transition: "all 0.3s ease-in-out",

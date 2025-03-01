@@ -36,6 +36,7 @@ import Sidebar from "./LayOut/Sidebar";
 import RepairManagement from "./Components/Repair/RepairManagement";
 import { BrandManagement, ModalManagement, ProductManagement } from "./Components/FormModal/ManagementPage";
 import CategoryPage from "./Components/Inventory/SiteData/CategoryPage";
+import BrandPage from "./Components/Inventory/SiteData/BrandPage";
 // Lazy load components
 const Login = lazy(() => import("./Auth/Login"));
 const AdminDashboard = lazy(() => import("./Components/Dashboard/AdminDashboard"));
@@ -87,7 +88,7 @@ function AppContent() {
               <Route path="/ManageInvoices" element={<ManageInvoices />} />
               <Route path="/repair-parts" element={<RepairManagement />} />
               <Route path="/category" element={<CategoryPage />} />
-              <Route path="/brand" element={<BrandManagement />} />
+              <Route path="/brand" element={<BrandPage />} />
               <Route path="/modal" element={<ModalManagement />} />
               <Route path="/ManageTickets" element={<ManageTickets />} />
               <Route path="/CreateTicket" element={<CreateTicket />} />
