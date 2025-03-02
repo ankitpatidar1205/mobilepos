@@ -37,6 +37,8 @@ import RepairManagement from "./Components/Repair/RepairManagement";
 import { BrandManagement, ModalManagement, ProductManagement } from "./Components/FormModal/ManagementPage";
 import CategoryPage from "./Components/Inventory/SiteData/CategoryPage";
 import BrandPage from "./Components/Inventory/SiteData/BrandPage";
+import ViewProduct from "./Components/Inventory/SiteData/ViewProduct";
+import TaxPage from "./Components/Inventory/TaxPage";
 // Lazy load components
 const Login = lazy(() => import("./Auth/Login"));
 const AdminDashboard = lazy(() => import("./Components/Dashboard/AdminDashboard"));
@@ -102,6 +104,8 @@ function AppContent() {
               <Route path="/MultiStoreSaleSummaryReport" element={<MultiStoreSaleSummaryReport />} />
               <Route path="/RegisterSalesReport" element={<RegisterSalesReport />} />
               <Route path="/RevenueBySalesReport" element={<RevenueBySalesReport />} />
+              <Route path="/view-product/:id" element={<ViewProduct />} />
+              <Route path="/Tax" element={<TaxPage />} />
             </Routes>
           </Suspense>
         </div>

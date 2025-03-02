@@ -138,7 +138,8 @@ const Sidebar = () => {
               {isSidebarOpen && <ListItemText primary="Brand" />}
             </ListItemButton>
           
-            <ListItemButton component={Link} to="/RepairPart" sx={{
+           
+            <ListItemButton component={Link} to="/Tax" sx={{
               borderRadius: "8px",
               transition: "all 0.3s ease-in-out",
               "&:hover": {
@@ -146,17 +147,7 @@ const Sidebar = () => {
                 color: "#40aed6",
               },
             }}>
-              {isSidebarOpen && <ListItemText primary="Repair Parts" />}
-            </ListItemButton>
-            <ListItemButton component={Link} to="/repair-parts" sx={{
-              borderRadius: "8px",
-              transition: "all 0.3s ease-in-out",
-              "&:hover": {
-                backgroundColor: "#1d1b31",
-                color: "#40aed6",
-              },
-            }}>
-              {isSidebarOpen && <ListItemText primary="Repair" />}
+              {isSidebarOpen && <ListItemText primary="Tax" />}
             </ListItemButton>
             <ListItemButton component={Link} to="/products" sx={{
               borderRadius: "8px",

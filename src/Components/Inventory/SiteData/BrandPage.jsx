@@ -37,6 +37,7 @@ const BrandPage = () => {
     };
 
     dispatch(createBrand(brandData));
+    dispatch(fetchBrands());
     handleModalClose();
   };
 
@@ -66,12 +67,8 @@ const BrandPage = () => {
               <h3 className="mb-md-4 mb-2 fw-semibold">Manage Brands</h3>
             </div>
             <div className="col-md-3 text-md-end">
-              <button
-                type="button"
-                className="btn text-white rounded px-4 py-2 fw-semibold mt-4"
-                style={{ backgroundColor: "#06223a" }}
-                onClick={handleModalShow}
-              >
+              <button type="button" className="btn text-white rounded px-4 py-2 fw-semibold mt-4"
+                style={{ backgroundColor: "#06223a" }} onClick={handleModalShow} >
                 <i className="fa-solid fa-plus" /> Create Brand
               </button>
             </div>
@@ -122,13 +119,8 @@ const BrandPage = () => {
           <Form onSubmit={handleFormSubmit}>
             <Form.Group controlId="brandName">
               <Form.Label>Brand Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Brand Name"
-                value={brandName}
-                onChange={(e) => setBrandName(e.target.value)}
-                required
-              />
+              <Form.Control  type="text" placeholder="Enter Brand Name" value={brandName}
+                onChange={(e) => setBrandName(e.target.value)} required/>
             </Form.Group>
 
             <Form.Group controlId="categorySelect" className="mt-3">

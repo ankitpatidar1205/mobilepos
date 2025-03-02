@@ -8,7 +8,7 @@ export const fetchBrands = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axiosInstance.get(`${apiUrl}/brand`);
-      console.log(response.data.data)
+      console.log(".........",response.data.data)
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || "Error fetching brands");

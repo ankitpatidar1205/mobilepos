@@ -4,9 +4,8 @@ import { Button, TextField, Container } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, fetchProducts } from "../../redux/slices/productSlice";
-import { showSuccessToast, showErrorToast } from "../../utils/toastUtils";
 import Swal from "sweetalert2";
-import { FaPen, FaTrash } from "react-icons/fa";
+import { FaEye, FaPen, FaTrash } from "react-icons/fa";
 
 const Product = () => {
   const [search, setSearch] = useState("");
@@ -30,23 +29,22 @@ const Product = () => {
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        dispatch(deleteProduct(productId))
-          .then((response) => {
-            if (response.meta.requestStatus === "fulfilled") {
-              showSuccessToast("Product deleted successfully!");
-            } else {
-              showErrorToast("Failed to delete product!");
-            }
-          })
-          .catch(() => {
-            showErrorToast("Something went wrong!");
-          });
+        try {
+          const response = await dispatch(deleteProduct(productId)).unwrap(); // Unwrap to catch errors
+          if (response) {
+            Swal.fire("Deleted!", "Product has been deleted.", "success");
+            dispatch(fetchProducts());
+          }
+        } catch (error) {
+          console.error("Delete Error:", error);
+          Swal.fire("Error!", error || "Failed to delete product.", "error");
+        }
       }
     });
   };
-
+  
   const filteredProducts = productList.filter((product) =>
     product.name.toLowerCase().includes(search.toLowerCase())
   );
@@ -62,45 +60,38 @@ const Product = () => {
           images.length > 0 ? images[0] : "https://via.placeholder.com/80";
 
         return (
-          <img
-            src={image1}
-            alt={params.row.name}
-            style={{
-              width: 60,
-              height: 30,
-              objectFit: "cover",
-              cursor: "pointer",
-            }}
-          />
+          <img  src={image1}  alt={params.row.name}  style={{    width: 60,    height: 30,  objectFit: "cover",  cursor: "pointer", }}/>
         );
       },
     },
     { field: "sku", headerName: "SKU Id", width: 150 },
-    { field: "name", headerName: "Product Name", width: 150 },
+    { field: "name", headerName: "Service Name", width: 150 },
     { field: "category", headerName: "Category", width: 150 },
-    { field: "price", headerName: "Price", width: 130 },
-    { field: "quantity", headerName: "Quantity", width: 130 },
+    { field: "brand", headerName: "Brand", width: 130 },
+    { field: "IMEI", headerName: "IMEI No", width: 130 },
     {
       field: "actions",
       headerName: "Actions",
       width: 200,
       renderCell: (params) => (
         <div style={{ display: "flex", gap: "10px" }}>
+           <Link to={`/view-product/${params.row._id}`} title="View Product">
+            <Button variant="contained" color="success">
+                <FaEye />
+              </Button>
+         </Link>
           <Link to="#" title="delete product">
-            <Button
-              variant="contained"
-              color="error"
-              onClick={() => handleDeleteProduct(params.row._id)}
-            >
+            <Button  variant="contained"  color="error"  onClick={() => handleDeleteProduct(params.row._id)}>
               <FaTrash className="text-white" />
             </Button>
           </Link>
-
           <Link to={`/update-product/${params.row._id}`}>
             <Button variant="contained" color="primary">
               <FaPen />
             </Button>
           </Link>
+           {/* View Product */}
+ 
         </div>
       ),
     },
@@ -111,12 +102,12 @@ const Product = () => {
       <div className="align-items-center mb-2">
         <div className="row d-flex justify-content-between mt-2 mb-2">
           <div className="col-md-9 mb-2">
-            <h3>Product List</h3>
+            <h3>Service List</h3>
           </div>
           <div className="col-md-3 mb-2 text-md-end">
             <Link to={"/create-product"} title="Add new Product">
               <Button variant="contained" color="primary">
-                + Create New Product
+                + Create New Service
               </Button>
             </Link>
           </div>
@@ -130,7 +121,7 @@ const Product = () => {
           style={{ marginBottom: "20px", width: "100%" }}
         />
 
-        <div style={{ height: 400, width: "100%" }}>
+        <div style={{ padding:"5px", width: "100%" }}>
           <DataGrid
             rows={filteredProducts.map((product) => ({
               ...product,
