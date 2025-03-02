@@ -64,7 +64,7 @@ const ViewProduct = () => {
               <ul className="list-group">
                 {product.accessories.map((acc) => (
                   <li className="list-group-item" key={acc._id}>
-                    {acc.accessoriesName} - <strong>${acc.accessoriesPrice}</strong>
+                    {acc.accessoriesName} - <strong>A${acc.accessoriesPrice}</strong>
                   </li>
                 ))}
               </ul>
@@ -78,7 +78,7 @@ const ViewProduct = () => {
               <ul className="list-group">
                 {product.repairTypes.map((repair) => (
                   <li className="list-group-item" key={repair._id}>
-                    {repair.partName} - <strong>${repair.partPrice}</strong>
+                    {repair.partName} - <strong>A${repair.partPrice}</strong>
                   </li>
                 ))}
               </ul>
@@ -92,7 +92,7 @@ const ViewProduct = () => {
               <ul className="list-group">
                 {product.serviceCharges.map((charge) => (
                   <li className="list-group-item" key={charge._id}>
-                     {charge.servicename} - <strong>${charge.serviceprice}</strong>
+                     {charge.servicename} - <strong>A${charge.serviceprice}</strong>
                   </li>
                 ))}
               </ul>
@@ -117,9 +117,13 @@ const ViewProduct = () => {
         <th>Total Service Cost</th>
         <td><strong>A${product.totalServiceCost}</strong></td>
       </tr>
+      <tr>
+        <th>Tax : {product.taxid.taxClass}</th>
+        <td><strong>{product.taxid.taxValue} %</strong></td>
+      </tr>
       <tr className="bg-light">
         <th>Total Price</th>
-        <td><strong className="text-success">A${product.totalPrice}</strong></td>
+        <td><strong className="text-success">A${product.totalPriceWithTax}</strong></td>
       </tr>
     </tbody>
   </table>

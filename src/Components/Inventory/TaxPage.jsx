@@ -120,11 +120,12 @@ const TaxPage = () => {
                   <td>{tax.taxClass}</td>
                   <td>{tax.taxValue}%</td>
                   <td>
-                    <Button variant="warning" size="sm" onClick={() => handleEditTax(tax)}>
-                      <i className="fa-solid fa-pen" />
-                    </Button>
+                   
                     <Button variant="danger" size="sm" onClick={() => handleDeleteTax(tax._id)} className="ms-2">
                       <i className="fa-solid fa-trash" />
+                    </Button>
+                    <Button variant="warning" size="sm" onClick={() => handleEditTax(tax)}>
+                      <i className="fa-solid fa-pen" />
                     </Button>
                   </td>
                 </tr>

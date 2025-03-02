@@ -5,6 +5,7 @@ import { createProduct, updateProduct } from "../../../redux/slices/productSlice
 import { showErrorToast, showSuccessToast } from "../../../utils/toastUtils";
 import { fetchBrands } from "../../../redux/slices/brandSlice";
 import { fetchCategories } from "../../../redux/slices/categorySlice";
+import { fetchTaxes } from "../../../redux/slices/taxSlice";
 
 const AddProduct = () => {
   const [activeTab, setActiveTab] = useState("deviceInfo");
@@ -14,10 +15,12 @@ const AddProduct = () => {
 
   const { brands } = useSelector((state) => state.brands);
   const { categories } = useSelector((state) => state.categories);
+  const { taxes } = useSelector((state) => state.tax);
 
   useEffect(() => {
     dispatch(fetchBrands());
     dispatch(fetchCategories());
+      dispatch(fetchTaxes());
   }, [dispatch]);
 
   const [formData, setFormData] = useState({
@@ -31,6 +34,7 @@ const AddProduct = () => {
     warrantyPeriod: "",
     status: "Pending",
     sku: "",
+    taxid:"",
     images: [],
     serviceCharges: [{ servicename: "", serviceprice: "" }], 
     repairTypes: [{ partName: "", partPrice: "" }],
@@ -163,8 +167,7 @@ const AddProduct = () => {
       </ul>
         <form className="row g-3 mt-4 p-4" onSubmit={handleSubmit}>
       
-       
-
+      
      {/* Device Information Section */}
      {activeTab === "deviceInfo" && (
           <>
@@ -190,7 +193,7 @@ const AddProduct = () => {
 
           {/* Brand Dropdown */}
           <div className="col-md-6 col-lg-6">
-            <label className="form-label fw-semibold">Brand</label>
+            <label className="form-label fw-semibold">Brand / Manufacturer</label>
             <select className="form-control" name="brand" value={formData.brand} onChange={handleChange}>
               <option value="">Select Brand</option>
               {brands && brands.map((brand) => (
@@ -198,6 +201,24 @@ const AddProduct = () => {
               ))}
             </select>
           </div>
+            {/* Tax Dropdown */}
+            <div className="col-md-6 col-lg-6">
+  <label className="form-label fw-semibold"> Tax</label>
+  <select 
+    className="form-control" 
+    name="taxid" 
+    value={formData.taxid} 
+    onChange={handleChange}
+  >
+    <option value="">Select Tax</option>
+    {taxes && taxes.map((tax) => (
+      <option key={tax._id} value={tax._id}> 
+        {tax.taxClass} 
+      </option>
+    ))}
+  </select>
+</div>
+
           {/* Warranty Dropdown */}
           <div className="col-md-6 col-lg-6">
             <label className="form-label fw-semibold">Warranty</label>
@@ -238,7 +259,7 @@ const AddProduct = () => {
           </div>
 
           {/* Description */}
-          <div className="col-md-6 col-lg-6">
+          <div className="col-md-6 col-lg-12">
             <label className="form-label fw-semibold">Description</label>
             <textarea className="form-control" rows={4} name="description" value={formData.description} onChange={handleChange} />
           </div>
@@ -248,12 +269,15 @@ const AddProduct = () => {
             <label className="form-label fw-semibold">Images</label>
             <input type="file" className="form-control" multiple onChange={handleImageChange} />
           </div>
+          <div className="text-end">
+          <button type="button" className="btn btn-primary" onClick={() => setActiveTab("serviceCharge")}>Next</button>
+          </div>
           </>
         )}
 
 
- {/* Service Charge Section */}
- {activeTab === "serviceCharge" && (
+    {/* Service Charge Section */}
+   {activeTab === "serviceCharge" && (
           <>
             <h5>Service Charge</h5>
             {formData.serviceCharges.map((service, index) => (
