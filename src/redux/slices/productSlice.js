@@ -17,6 +17,19 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
+export const fetchProductById = createAsyncThunk(
+  'product/fetchById',
+  async (id, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get(`${apiUrl}/products/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Fetch Product by ID Error:", error.response);
+      return thunkAPI.rejectWithValue(error.response?.data || "Unauthorized access");
+    }
+  }
+);
+
 // Create product
 export const createProduct = createAsyncThunk(
   'product/create',
