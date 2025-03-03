@@ -1,24 +1,10 @@
-import React, { useState } from "react";
-import {
-  FaPlus,
-  FaMobileAlt,
-  FaTabletAlt,
-  FaLaptop,
-  FaHeadphones,
-  FaClock,
-} from "react-icons/fa";
+import React from "react";
+import { FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-const RepairTab = ({ showModal, handleSelection, selectedItems = [] }) => {
-  const repairCategories = [
-    { id: 1, name: "Screen Repair", icon: <FaMobileAlt size={40} color="#1c202b" />, price: 50 },
-    { id: 11, name: "Battery Repair", icon: <FaTabletAlt size={40} color="#1c202b" />, price: 70 },
-    { id: 7, name: "Charger Repair", icon: <FaTabletAlt size={40} color="#1c202b" />, price: 30 },
-    { id: 9, name: "Software Repair", icon: <FaHeadphones size={40} color="#1c202b" />, price: 40 },
-    { id: 13, name: "Hard Disk Repair", icon: <FaLaptop size={40} color="#1c202b" />, price: 100 },
-    { id: 14, name: "Watch Repair", icon: <FaClock size={40} color="#1c202b" />, price: 60 },
-    { id: 51, name: "Other Issue", icon: <FaLaptop size={40} color="#1c202b" />, price: 80 },
-  ];
+const RepairTab = ({ showModal, handleSelection, selectedItems, repairParts = [] }) => {
 
+  console.log("repaire parts ", selectedItems);
   return (
     <div className="tab-pane fade show active">
       <div className="row">
@@ -31,20 +17,21 @@ const RepairTab = ({ showModal, handleSelection, selectedItems = [] }) => {
                 onClick={showModal}
               >
                 <div className="card-body pt-3">
-                  <h6 className="card-title" style={{ color: "whitesmoke", marginBottom: 8 }}>ADD NEW</h6>
+                  <h6 className="card-title" style={{ color: "whitesmoke"}}>  <Link
+                   to="/create-product" style={{color: "white", textDecoration: "none"}}>  ADD New </Link></h6>
                   <FaPlus size={25} color="whitesmoke" />
                 </div>
               </div>
             </div>
 
-            {repairCategories.map((category) => (
+            {repairParts.map((part) => (
               <div
-                key={category.id}
+                key={part._id}
                 className="col-6 col-sm-6 col-md-6 col-lg-3 mb-3"
-                onClick={() => handleSelection("repair", category)}
+                onClick={() => handleSelection("repair-parts", part)}
               >
                 <div
-                  className={`card category-card pos-sort-items get_manufacture ${selectedItems && selectedItems.some((i) => i.id === category.id) ? "selected" : ""}`}
+                  className={`card category-card ${selectedItems?.some((i) => i._id === part._id) ? "border-2  shadow-md" : ""}`}
                   style={{
                     height: "150px",
                     display: "flex",
@@ -55,18 +42,12 @@ const RepairTab = ({ showModal, handleSelection, selectedItems = [] }) => {
                     padding: "10px",
                     borderRadius: "12px",
                     boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-                    transition: "all 0.3s ease-in-out",
-                    backgroundColor: (selectedItems && Array.isArray(selectedItems) && selectedItems.some((i) => i.id === category.id)) 
-                    ? "#f0f0f0" 
-                    : "#fff",
-                
-                  
+                    backgroundColor: selectedItems?.some((i) => i._id === part._id) ? "#f0f0f0" : "#fff",
                   }}
                 >
                   <div className="card-body text-center">
-                    {category.icon}
-                    <p className="title_name mt-2">{category.name}</p>
-                    <p className="price">${category.price}</p>
+                    <p className="title_name mt-2">{part.partName}</p>
+                    <p className="price">${part.partPrice}</p>
                   </div>
                 </div>
               </div>

@@ -38,7 +38,7 @@ const Productlistsel = ({ products, onProductSelect }) => {
       const updated = exists
         ? prev.filter((p) => p.sku !== product.sku)
         : [...prev, { ...product, quantity: 1 }];
-      onProductSelect(updated);
+        setSelectedProducts(updated);
       return updated;
     });
   };

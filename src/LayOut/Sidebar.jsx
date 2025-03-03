@@ -239,6 +239,7 @@ const Sidebar = () => {
             }}>
               {isSidebarOpen && <ListItemText primary="Register Sales" />}
             </ListItemButton>
+            
           </List>
         </Collapse>
       </List>
