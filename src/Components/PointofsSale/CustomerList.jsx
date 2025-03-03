@@ -1,28 +1,26 @@
 import { useState, useEffect } from "react";
 import AddCustomer from "../Customer/AddCustomer";
+import { useSelector, useDispatch } from "react-redux";
+import { getCustomers } from "../../redux/slices/customerSlice";
 
 const CustomerList = ({ onSelectCustomer }) => {
-  const [customers, setCustomers] = useState([]);
+  const dispatch = useDispatch();
+  // const [customers, setCustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { customers } = useSelector((state) => state.customer);
+
   // Mock API (Replace with actual API)
   useEffect(() => {
-    const fetchCustomers = async () => {
-      const data = [
-        { id: 1, name: "John Doe", email: "john@example.com" },
-        { id: 2, name: "Alice Smith", email: "alice@example.com" },
-        { id: 3, name: "Michael Brown", email: "michael@example.com" },
-      ];
-      setCustomers(data);
-      setFilteredCustomers(data);
-    };
-    fetchCustomers();
-  }, []);
+     dispatch(getCustomers());
+     
+   }, [dispatch]);
   // Handle Adding a New Customer
   const handleAddCustomer = (newCustomer) => {
-    setCustomers((prev) => [...prev, newCustomer]); 
+   
     setIsModalOpen(false); 
   };
 
@@ -41,7 +39,7 @@ const CustomerList = ({ onSelectCustomer }) => {
     onSelectCustomer(customer);
     setIsDropdownOpen(false);
   };
-
+console.log(customers)
   return (
     <div className="customer-search-container position-relative mx-3 my-3">
       <div className="input-group mt-4">
@@ -78,7 +76,7 @@ const CustomerList = ({ onSelectCustomer }) => {
                 onClick={() => handleSelectCustomer(customer)}
                 style={{ cursor: "pointer" }}
               >
-                {customer.name} ({customer.email})
+                {customer.first_name} {customer.last_name} 
               </li>
             ))
           ) : (

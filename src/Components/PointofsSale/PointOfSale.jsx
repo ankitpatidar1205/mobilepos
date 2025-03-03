@@ -21,7 +21,7 @@ const PointOfSale = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
 
   const { products, loading } = useSelector((state) => state.product);
-  const { customers } = useSelector((state) => state.customer);
+
 
   const productList = Array.isArray(products?.data) ? products.data : [];
 
@@ -126,7 +126,7 @@ const PointOfSale = () => {
           <CustomerList onSelectCustomer={setSelectedCustomer} />
           {selectedCustomer && (
             <Alert
-              message={`Selected Customer: ${selectedCustomer.name}`}
+              message={`Selected Customer: ${selectedCustomer.first_name} ${selectedCustomer.last_name}`}
               type="info"
               className="mt-2"
             />
