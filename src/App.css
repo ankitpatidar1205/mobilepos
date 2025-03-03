@@ -204,3 +204,41 @@ body {
     width: 100%;
   }
 }
+.MuiContainer-root {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+
+.nav-tabs {
+  background-color: lightblue !important;
+  border-bottom: 0px solid #007bff !important; /* Optional: Border color */
+  border-radius: 10px;
+  padding: 0px;
+}
+
+.nav-tabs .nav-link {
+  color: black !important;
+  border: none !important;
+  padding: 7px 10px;
+}
+
+.nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus {
+  background-color: white !important; /* Light hover effect */
+  color: black !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: white !important;
+  color: black !important;
+  border: 2px solid #007bff !important;
+  border-bottom: none !important;
+}
+
+.nav-item:hover{
+  background-color: transparent !important
+}
