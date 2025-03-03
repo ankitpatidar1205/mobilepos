@@ -59,7 +59,7 @@ const Sidebar = () => {
           },
         }}>
           <ListItemIcon><BuildIcon sx={{ color: !isSidebarOpen ? "#40aed6" : "#fff", transition: "all 0.3s ease-in-out", }} /></ListItemIcon>
-          {isSidebarOpen && <ListItemText primary="Repair" />}
+          {isSidebarOpen && <ListItemText primary="Invoice" />}
           {openDropdown === "repairDropdown" ? <ExpandLess sx={{ color: "#fff" }} /> : <ExpandMore sx={{ color: "#fff" }} />}
         </ListItemButton>
         <Collapse in={openDropdown === "repairDropdown"} timeout="auto" unmountOnExit>
@@ -83,7 +83,7 @@ const Sidebar = () => {
                 color: "#40aed6",
               },
             }}>
-              {isSidebarOpen && <ListItemText primary="Manage Tickets" />}
+              {isSidebarOpen && <ListItemText primary="Paid Invoice" />}
             </ListItemButton>
             <ListItemButton component={Link} to="/ManageEstimates" sx={{
               borderRadius: "8px",
@@ -93,7 +93,7 @@ const Sidebar = () => {
                 color: "#40aed6",
               },
             }}>
-              {isSidebarOpen && <ListItemText primary="Manage Estimates" />}
+              {isSidebarOpen && <ListItemText primary="Unpaid Invoice" />}
             </ListItemButton>
           </List>
         </Collapse>

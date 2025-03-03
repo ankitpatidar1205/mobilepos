@@ -39,6 +39,7 @@ import CategoryPage from "./Components/Inventory/SiteData/CategoryPage";
 import BrandPage from "./Components/Inventory/SiteData/BrandPage";
 import ViewProduct from "./Components/Inventory/SiteData/ViewProduct";
 import TaxPage from "./Components/Inventory/TaxPage";
+import ViewInvoice from "./Components/Repair/ViewInvoice";
 // Lazy load components
 const Login = lazy(() => import("./Auth/Login"));
 const AdminDashboard = lazy(() => import("./Components/Dashboard/AdminDashboard"));
@@ -106,6 +107,7 @@ function AppContent() {
               <Route path="/RevenueBySalesReport" element={<RevenueBySalesReport />} />
               <Route path="/view-product/:id" element={<ViewProduct />} />
               <Route path="/Tax" element={<TaxPage />} />
+              <Route path="/ViewInvoice/:id" element={<ViewInvoice />} />
             </Routes>
           </Suspense>
         </div>

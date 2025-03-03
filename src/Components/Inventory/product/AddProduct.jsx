@@ -155,8 +155,8 @@ const AddProduct = () => {
           </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link ${activeTab === "repairType" ? "active" : ""}`} onClick={() => setActiveTab("repairType")}>
-            Repair Type
+          <button className={`nav-link ${activeTab === "repairParts" ? "active" : ""}`} onClick={() => setActiveTab("repairParts")}>
+            Repair Parts
           </button>
         </li>
         <li className="nav-item">
@@ -298,14 +298,14 @@ const AddProduct = () => {
             <button type="button" className="btn set_btn mt-3" onClick={addServiceCharge}>Add More Service Charge</button>
             <div className="col-12 text-end">
               <button type="button" className="btn btn-secondary me-2" onClick={() => setActiveTab("deviceInfo")}>Back</button>
-              <button type="button" className="btn btn-primary" onClick={() => setActiveTab("repairType")}>Next</button>
+              <button type="button" className="btn btn-primary" onClick={() => setActiveTab("repairParts")}>Next</button>
             </div>
           </>
         )}
       {/* Repair Type Section */}
-      {activeTab === "repairType" && (
+      {activeTab === "repairParts" && (
           <>
-            <h5>Repair Type</h5>
+            <h5>Repair Parts  </h5>
             {formData.repairTypes.map((repair, index) => (
               <div key={index} className="row">
                 <div className="col-md-5">
@@ -351,7 +351,7 @@ const AddProduct = () => {
             ))}
             <button type="button" className="btn set_btn mt-3" onClick={addAccessory}>Add Accessory</button>
             <div className="col-12 text-end">
-              <button type="button" className="btn btn-secondary me-2" onClick={() => setActiveTab("repairType")}>Back</button>
+              <button type="button" className="btn btn-secondary me-2" onClick={() => setActiveTab("repairParts")}>Back</button>
               <button type="submit" className="btn btn-success">Submit</button>
             </div>
           </>

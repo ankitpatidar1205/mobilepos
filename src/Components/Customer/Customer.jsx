@@ -64,7 +64,7 @@ const Customer = () => {
           <IconButton onClick={() => handleViewCustomer(params.row.id)}>
             <Visibility />
           </IconButton>
-          <IconButton onClick={() => handleDeleteCustomer(params.row.id)}>
+          <IconButton onClick={() => handleDeleteCustomer(params.row._id)}>
             <Delete color="error" />
           </IconButton>
         </div>

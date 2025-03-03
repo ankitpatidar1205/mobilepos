@@ -17,7 +17,8 @@ export const createTax = createAsyncThunk("taxes/create", async (taxData, thunkA
     const response = await axiosInstance.post(`${apiUrl}/taxes`, taxData, {
       headers: { "Content-Type": "application/json" },
     });
-    return response.data;
+
+    return response.data.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || "Error creating tax");
   }

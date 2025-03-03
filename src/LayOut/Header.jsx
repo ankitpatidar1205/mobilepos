@@ -36,7 +36,7 @@ const Header = () => {
                   style={{ marginLeft: "-100px", padding: "8px 6px" }}
                 >
                   <li>
-                    <Link className="dropdown-item custom-dropdown-item" to="">
+                    <Link className="dropdown-item custom-dropdown-item">
                       <i className="fa fa-user" /> Your Profile
                     </Link>
                   </li>

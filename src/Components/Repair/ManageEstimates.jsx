@@ -1,138 +1,95 @@
-import React from "react";
+
+import React, { useState, useEffect } from "react";
+import { Button, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { apiUrl } from "../../utils/config";
+import axiosInstance from "../../utils/axiosInstance";
 
 const ManageEstimates = () => {
+  const [invoices, setInvoices] = useState([]);
+
+  // ✅ Fetch Only Paid Invoices from API
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      try {
+        const response = await axiosInstance.get(`${apiUrl}/invoice`);
+        console.log("Fetched Invoices:", response.data.data);
+
+        // Filter only paid invoices (status === 1)
+        const paidInvoices = response.data.data.filter(invoice => invoice.status === 0);
+        setInvoices(paidInvoices);
+      } catch (error) {
+        console.error("Error fetching invoices:", error);
+      }
+    };
+
+    fetchInvoices();
+  }, []);
+
+  // ✅ Handle Delete Invoice
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this invoice?")) {
+      try {
+        await axiosInstance.delete(`${apiUrl}/invoice/${id}`);
+        setInvoices((prevInvoices) => prevInvoices.filter((invoice) => invoice._id !== id));
+      } catch (error) {
+        console.error("Error deleting invoice:", error);
+      }
+    }
+  };
+
   return (
-    <div>
-      <div className="mx-md-5 mt-5 m-3">
-        <div className="shadow p-4">
-          <div className="row top d-flex justify-content-between">
-            <div className="col-md-9">
-              <h3 className="mb-md-4 mb-2 fw-semibold">Manage Estimates</h3>
-            </div>
-            <div className="col-md-3 text-md-end">
-              <button
-                type="button"
-                className="btn text-white rounded px-4 py-2 fw-semibold mt-4"
-                style={{ backgroundColor: "#06223a" }}
-              >
-                <i className="fa-solid fa-plus" />
-                <Link
-                  to="/CreateTicket"
-                  className="text-decoration-none text-white ms-2"
-                >
-                  Create New Tickets
-                </Link>
-              </button>
-            </div>
-          </div>
-          <form className="row g-3 mt-4">
-            <div className="col-md-6 col-lg-4">
-              <label htmlFor="customerName" className="form-label fw-semibold">
-                Customer Name
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="customerName"
-                placeholder="Customer Name"
-              />
-            </div>
-            <div className="col-md-6 col-lg-4">
-              <label htmlFor="invoiceId" className="form-label fw-semibold">
-                Estimate ID
-              </label>
-              <input
-                type="number"
-                className="form-control"
-                id="invoiceId"
-                placeholder="Estimate ID"
-              />
-            </div>
-            <div className="col-md-6 col-lg-4">
-              <label htmlFor="invoiceStatus" className="form-label fw-semibold">
-                Estimate Status
-              </label>
-              <select id="invoiceStatus" className="form-select">
-                <option selected="">Select Status</option>
-                <option value={1}>Cancelled</option>
-                <option value={2}>Completed</option>
-                <option value={3}>Customer Reply</option>
-              </select>
-            </div>
-            <div className="col-md-6 col-lg-4">
-              <label htmlFor="employee" className="form-label fw-semibold">
-                Employee
-              </label>
-              <select id="employee" className="form-select">
-                <option selected="">Select Employee</option>
-                <option value={1}>Jay</option>
-                <option value={2}>Zyan</option>
-                <option value={3}>Mayna</option>
-              </select>
-            </div>
-            <div className="col-md-6 col-lg-4">
-              <div className="mb-3">
-                <label htmlFor="fromDate" className="form-label fw-semibold">
-                  From Date
-                </label>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="fromDate"
-                  defaultValue="2025-01-15"
-                />
-              </div>
-            </div>
-            <div className="col-md-6 col-lg-4">
-              <div className="mb-3">
-                <label htmlFor="fromDate" className="form-label  fw-semibold">
-                  To Date
-                </label>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="fromDate"
-                  defaultValue="2025-01-15"
-                />
-              </div>
-            </div>
-          </form>
-          <button
-            type="button"
-            className="btn text-white rounded px-4 py-2 fw-semibold mt-4"
-            style={{ backgroundColor: "#06223a" }}
-          >
-            Search
-          </button>
-        </div>
-        <div className="table-responsive mt-2 shadow p-3">
-          <table className="table align-middle table-striped mx-2">
-            <thead className="table-dark">
+    <div className="mx-md-5 mt-5 m-3">
+      <div className="shadow p-2">
+        <h3 className="mb-4 fw-semibold"> Unpaid Invoices</h3>
+      </div>
+
+      <div className="table-responsive mt-2 shadow p-3">
+        <table className="table align-middle table-bordered table-striped">
+          <thead className="table-dark" style={{ whiteSpace: "nowrap" }}>
+            <tr>
+              <th>#</th>
+              <th>Date</th>
+              <th>Customer Name</th>
+              <th>Email</th>
+              <th>State</th>
+              <th>City</th>
+              <th>Country</th>
+              <th>Total</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody style={{ whiteSpace: "nowrap" }}>
+            {invoices.length > 0 ? (
+              invoices.map((invoice, index) => (
+                <tr key={invoice._id}>
+                  <td>{index + 1}</td>
+                  <td>{new Date(invoice.createdAt).toLocaleString()}</td>
+                  <td>{invoice.customerId?.first_name} {invoice.customerId?.last_name}</td>
+                  <td>{invoice.customerId?.email}</td>
+                  <td>{invoice.customerId?.state}</td>
+                  <td>{invoice.customerId?.city}</td>
+                  <td>{invoice.customerId?.country}</td>
+                  <td>{invoice.price ? `A$${invoice.price}` : "N/A"}</td>
+                  <td>
+                    <Link to={`/ViewInvoice/${invoice._id}`}>
+                      <Button variant="primary" size="sm" className="me-2">
+                        <i className="fa-solid fa-eye"></i>
+                      </Button>
+                    </Link>
+                    <Button variant="danger" size="sm" onClick={() => handleDelete(invoice._id)}>
+                      <i className="fa-solid fa-trash"></i>
+                    </Button>
+                  </td>
+                </tr>
+              ))
+            ) : (
               <tr>
-                <th>
-                  <input type="checkbox" />
-                </th>
-                <th>Estimate ID</th>
-                <th>Date</th>
-                <th>Customer Name</th>
-                <th>Contact #</th>
-                <th>Device</th>
-                <th>Product</th>
-                <th>Status</th>
-                <th>Total</th>
-                <th>More</th>
+                <td colSpan="9" className="text-center">No Unpaid invoices found</td>
               </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colSpan={10} className="text-center text-muted">
-                  No Data Available
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

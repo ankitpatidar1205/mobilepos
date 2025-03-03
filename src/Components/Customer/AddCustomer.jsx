@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  clearMessages,
-  registerCustomer,
+import {useState } from "react";
+import { useDispatch,  } from "react-redux";
+import Swal from "sweetalert2";
+import { registerCustomer,
 } from "../../redux/slices/customerSlice";
-import { showErrorToast, showSuccessToast } from "../../utils/toastUtils";
 
-const AddCustomer = ({ onClose, onAdd }) => {
+
+const AddCustomer = () => {
   const dispatch = useDispatch();
-  const { loading, error, successMessage } = useSelector(
-    (state) => state.customer
-  );
+
 
   const [customerData, setCustomerData] = useState({
     first_name: "",
@@ -37,23 +34,14 @@ const AddCustomer = ({ onClose, onAdd }) => {
     e.preventDefault();
     console.log("customer", customerData);
     dispatch(registerCustomer(customerData));
-    const newCustomer = {
-      name: customerData.first_name,
-    };
-    onAdd(newCustomer);
-    onClose();
+    Swal.fire({
+      title: "Success!",
+      text: "Customer added successfully!",
+      icon: "success",
+      confirmButtonText: "OK",
+  })
   };
 
-  useEffect(() => {
-    if (successMessage) {
-      showSuccessToast(successMessage);
-      dispatch(clearMessages());
-    }
-    if (error) {
-      showErrorToast(error);
-      dispatch(clearMessages());
-    }
-  }, [dispatch, successMessage, error]);
 
   return (
     <div className="container my-5">
@@ -201,22 +189,20 @@ const AddCustomer = ({ onClose, onAdd }) => {
 
           <div className="row g-3 mt-2">
             {/* Country */}
+           
             <div className="col-md-6">
-              <label htmlFor="country" className="form-label">
-                Country
+              <label htmlFor="state" className="form-label">
+              Country
               </label>
-              <select
-                className="form-select"
+              <input
+                type="text"
+                className="form-control"
                 id="country"
                 name="country"
+                placeholder="State"
                 value={customerData.country}
                 onChange={handleChange}
-              >
-                <option value="Australia">Australia</option>
-                <option value="United States">United States</option>
-                <option value="Canada">Canada</option>
-                {/* Add more countries as needed */}
-              </select>
+              />
             </div>
             <div className="col-md-6">
               <label htmlFor="password" className="form-label required">
@@ -243,9 +229,9 @@ const AddCustomer = ({ onClose, onAdd }) => {
               type="submit"
               className="btn"
               style={{ backgroundColor: "#06223a", color: "white" }}
-              disabled={loading}
+             
             >
-              {loading ? "Submitting..." : "Add Customer"}
+              { "Add Customer"}
             </button>
           </div>
         </form>
