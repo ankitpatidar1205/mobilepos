@@ -5,9 +5,8 @@ import { getCustomers } from "../../redux/slices/customerSlice";
 
 const CustomerList = ({ onSelectCustomer }) => {
   const dispatch = useDispatch();
-  // const [customers, setCustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredCustomers, setFilteredCustomers] = useState([]);
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -16,24 +15,31 @@ const CustomerList = ({ onSelectCustomer }) => {
   // Mock API (Replace with actual API)
   useEffect(() => {
      dispatch(getCustomers());
-     
    }, [dispatch]);
-  // Handle Adding a New Customer
-  const handleAddCustomer = (newCustomer) => {
+
    
+  // Handle Adding a New Customer
+  const handleAddCustomer = () => {
     setIsModalOpen(false); 
+    dispatch(getCustomers());
   };
 
-  useEffect(() => {
-    if (searchTerm.trim() === "") {
-      setFilteredCustomers(customers);
-    } else {
-      const results = customers.filter((customer) =>
-        customer.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredCustomers(results);
-    }
-  }, [searchTerm, customers]);
+  // useEffect(() => {
+  //   if (searchTerm.trim() === "") {
+  //     setFilteredCustomers(customers);
+  //   } else {
+  //     const results = customers.filter((customer) =>
+  //       customer.name.toLowerCase().includes(searchTerm.toLowerCase())
+  //     );
+  //     setFilteredCustomers(results);
+  //   }
+  // }, [searchTerm, customers]);
+
+  const filteredCustomers = customers.filter((customer) =>
+    `${customer.first_name} ${customer.last_name} ${customer.email} ${customer.city}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
 
   const handleSelectCustomer = (customer) => {
     onSelectCustomer(customer);
